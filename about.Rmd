@@ -1,0 +1,7 @@
+---
+title: "A little something"
+author: "Sean Pierre"
+date: "10/27/2021"
+output: html_document
+---
+More about me? Maybe? I guess?
