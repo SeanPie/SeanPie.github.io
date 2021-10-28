@@ -1,6 +1,6 @@
 ---
 title: "My Website"
-author: "Sean Pierre"
+author: "Sean Pierre-Louis"
 date: "10/27/2021"
 output: html_document
 ---

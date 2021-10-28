@@ -2,11 +2,17 @@ name: "my-website"
 output_dir: docs
 navbar:
   title: "Sean's New Thing"
+  type: inverse
   left:
     - text: "Home"
+      icon: fa-bomb
       href: index.html
     - text: "About"
+      icon: fa-black-tie
       href: about.html
+  right:
+    - icon: fa-question
+      href: examples.html
 output:
   html_document:
     theme: cosmo
