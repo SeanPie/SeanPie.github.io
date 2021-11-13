@@ -1,7 +1,8 @@
 ---
 title: "CV"
 author: "Sean Pierre"
-date: "11/12/2021"
-output: html_document
+output:
+  html_document:
+    toc: false
 ---
 Maybe importing PDF.... As soon I make one...

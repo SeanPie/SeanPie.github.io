@@ -1,8 +1,0 @@
----
-title: "Example page"
-author: "Sean Pierre"
-date: "10/28/2021"
-output: html_document
----
-
-Still testing

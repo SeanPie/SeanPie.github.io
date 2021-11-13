@@ -1,0 +1,8 @@
+---
+title: "Contacts"
+author: "Sean Pierre"
+output: 
+  html_document:
+    toc: false
+---
+Working on links: Twitter and Github (Both just created)

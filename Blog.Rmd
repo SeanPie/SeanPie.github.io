@@ -2,6 +2,8 @@
 title: "Blog"
 author: "Sean Pierre"
 date: "11/12/2021"
-output: html_document
+output: 
+  html_document:
+    toc: false
 ---
-Probably Won't make a blog either but hey, everyone has to start somewhere.
+I'm not sure if I will be making a blog but I suppose its nice to know that I can.

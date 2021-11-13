@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Master of Science: Genetics" />
+<meta name="author" content="University of New Hampshire Graduate Student" />
 
 
 <title>Sean Pierre-Louis</title>
@@ -17,7 +17,7 @@
 <script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,8 +30,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
@@ -60,7 +63,6 @@ if (window.hljs) {
 
 
 
-<link rel="stylesheet" href="styles.css" type="text/css" />
 
 
 
@@ -222,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -229,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -253,20 +328,14 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="about.html">
+  <a href="Blog.html">
     <span class="fa fa-black-tie"></span>
      
-    Research
+    Blog
   </a>
 </li>
 <li>
-  <a href="CV.html">CV</a>
-</li>
-<li>
-  <a href="Blog.html">Blog</a>
-</li>
-<li>
-  <a href="examples.html">
+  <a href="Contact.html">
     <span class="fa fa-question"></span>
      
     Contact
@@ -285,16 +354,51 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Sean Pierre-Louis</h1>
-<h4 class="author">Master of Science: Genetics</h4>
+<h3 class="subtitle">Master of Science: Genetics</h3>
+<h4 class="author">University of New Hampshire Graduate Student</h4>
 
 </div>
 
 
-<p>Wondering What This Does. <img src="Users/sean/Desktop/Images/Linkedin1.jpg" alt="Hi, Its Me!" width="25%"></p>
+<div id="about-me" class="section level1">
+<h1>About Me</h1>
+<hr />
+<div id="welcome" class="section level3">
+<h3>Welcome!</h3>
+<div class="floating">
+<p>I am a first year Masters student trying to learn the ways of the computer. I’ve continued my studies here at the University of New Hampshire where I also completed my BSc. I am currently under the supervision of Dr. Matt MacManes.</p>
+<div class="figure">
+<img src="Linkedin1.jpg" class="class" style="width:35.0%" alt="" />
+<p class="caption">Hi, Its Me!</p>
+</div>
+</div>
+<div style="display: flex;">
+<div>
+<p>I would like to make a beautiful, scroll-able webpage, so I’m spending way more time learning CSS than I should.</p>
+<p><br><br><br><br></p>
+</div>
+<div>
+<p>I’m hoping this will be formatted in a separate column. Not for any particular reason but I can imagine its usefulness in the future</p>
+</div>
+</div>
+</div>
+</div>
+<div id="research" class="section level1">
+<h1>Research</h1>
+<hr />
+<p>I’ve yet to have any publications and my CV looks more like a resume but my research work is to be based on the desert cactus mouse, Peromyscus eremicus. This North American mouse has an amazing ability to resist severe dehydration and we’re trying to understand how. My first research project will be analyzing the microbiota of peromyscus through RNA sequencing.</p>
+</div>
+<div id="cv" class="section level1">
+<h1>CV</h1>
+<hr />
+<p>More to come soon!</p>
+</div>
 
 <p>Copyright &copy; 2021 no idea what this does (yet.) but No rights reserved.</p>
 
 
+</div>
+</div>
 
 </div>
 
@@ -327,6 +431,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

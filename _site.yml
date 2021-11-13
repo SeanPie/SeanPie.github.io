@@ -7,22 +7,16 @@ navbar:
     - text: "About Me"
       icon: fa-bomb
       href: index.html
-    - text: "Research"
-      icon: fa-black-tie
-      href: about.html
-    - text: "CV"
-      icon:
-      href: CV.html
     - text: "Blog"
-      icon:
+      icon: fa-black-tie
       href: Blog.html
     - icon: fa-question
       text: "Contact"
-      href: examples.html
+      href: Contact.html
 output:
   html_document:
-    theme: cosmo
-    highlight: textmate
+    theme: readable
+    toc: true
+    toc_float: true
     include:
       after_body: footer.html
-    css: styles.css
