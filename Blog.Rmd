@@ -1,0 +1,7 @@
+---
+title: "Blog"
+author: "Sean Pierre"
+date: "11/12/2021"
+output: html_document
+---
+Probably Won't make a blog either but hey, everyone has to start somewhere.

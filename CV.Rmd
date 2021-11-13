@@ -1,0 +1,7 @@
+---
+title: "CV"
+author: "Sean Pierre"
+date: "11/12/2021"
+output: html_document
+---
+Maybe importing PDF.... As soon I make one...

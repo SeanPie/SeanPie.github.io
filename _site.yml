@@ -1,17 +1,23 @@
-name: "my-website"
+name: "SeanPie.github.io"
 output_dir: docs
 navbar:
-  title: "Sean's New Thing"
+  title: "Sean Pierre-Louis"
   type: inverse
   left:
-    - text: "Home"
+    - text: "About Me"
       icon: fa-bomb
       href: index.html
-    - text: "About"
+    - text: "Research"
       icon: fa-black-tie
       href: about.html
-  right:
+    - text: "CV"
+      icon:
+      href: CV.html
+    - text: "Blog"
+      icon:
+      href: Blog.html
     - icon: fa-question
+      text: "Contact"
       href: examples.html
 output:
   html_document:

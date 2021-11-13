@@ -1,8 +1,7 @@
 ---
-title: "My Website"
-author: "Sean Pierre-Louis"
-date: "10/27/2021"
+title: "Sean Pierre-Louis"
+author: "Master of Science: Genetics"
 output: html_document
 ---
-
-Hello, Website! Welcome to the world.
+Wondering What This Does.
+<img src="Users/sean/Desktop/Images/Linkedin1.jpg" alt="Hi, Its Me!" width="25%">
