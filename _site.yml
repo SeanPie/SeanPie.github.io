@@ -13,6 +13,16 @@ navbar:
     - icon: fa-question
       text: "Contact"
       href: Contact.html
+  right:
+    - icon: fa-envelope-o fa
+      href: mailto:Sean.Pierre-Louis@unh.edu
+    - icon: fa-github fa
+      href: https://github.com/SeanPie
+    - icon: fa-twitter fa
+      href: https://twitter.com/seanpierre_
+    - icon: fa-linkedin
+      href: https://www.linkedin.com/in/sean-pierre-louis-0a5ab3a9/
+    
 output:
   html_document:
     theme: readable
