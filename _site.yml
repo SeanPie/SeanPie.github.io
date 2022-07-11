@@ -8,7 +8,7 @@ navbar:
       icon: fa-bomb
       href: index.html
     - text: "Blog"
-      icon: fa-black-tie
+      icon: fa-light fa-laptop-file
       href: Blog.html
     - icon: fa-question
       text: "Contact"

@@ -14,8 +14,8 @@
 
 <title>Sean Pierre-Louis</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -66,6 +66,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -86,6 +87,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -311,7 +315,7 @@ div.tocify {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -383,14 +387,17 @@ div.tocify {
 </div>
 
 
-<p><br><br><br><br></p>
+<p><br><br><br></p>
 <div id="about-me" class="section level1">
 <h1>About Me</h1>
 <hr />
 <div id="welcome" class="section level3">
 <h3>Welcome!</h3>
 <div class="floating">
-<p>I am a first year Masters student trying to learn the ways of the computer. I’ve continued my studies here at the University of New Hampshire where I also completed my BSc. I am currently under the supervision of Dr. Matt MacManes.</p>
+<p>I am a first year Masters student trying to learn the ways of the
+computer. I’ve continued my studies here at the University of New
+Hampshire where I also completed my BSc. I am currently under the
+supervision of Dr. Matt MacManes.</p>
 <div class="figure">
 <img src="Linkedin1.jpg" class="class" style="width:35.0%" alt="" />
 <p class="caption">Hi, Its Me!</p>
@@ -398,11 +405,13 @@ div.tocify {
 </div>
 <div style="display: flex;">
 <div>
-<p>I would like to make a beautiful webpage, so I’m spending more time on the little things than I should.</p>
-<p><br><br><br><br></p>
+<p>Current Research work: <a href="SeuratAnalysis.html">Spatial
+Transcriptomics analysis</a></p>
+<p><br><br><br></p>
 </div>
 <div>
-<p>I’m hoping this will be formatted in a separate column. Not for any particular reason but I can imagine its usefulness in the future</p>
+<p>I’m hoping this will be formatted in a separate column. Not for any
+particular reason but I can imagine its usefulness in the future</p>
 </div>
 </div>
 </div>
@@ -410,7 +419,12 @@ div.tocify {
 <div id="research" class="section level1">
 <h1>Research</h1>
 <hr />
-<p>I’ve yet to have any publications and my CV looks more like a resume but my research work is to be based on the desert cactus mouse, Peromyscus eremicus. This North American mouse has an amazing ability to resist severe dehydration and we’re trying to understand how. My first research project will be analyzing the microbiota of peromyscus through RNA sequencing.</p>
+<p>I’ve yet to have any publications and my CV looks more like a resume
+but my research work is to be based on the desert cactus mouse,
+Peromyscus eremicus. This North American mouse has an amazing ability to
+resist severe dehydration and we’re trying to understand how. My first
+research project will be analyzing the microbiota of peromyscus through
+RNA sequencing.</p>
 </div>
 <div id="cv" class="section level1">
 <h1>CV</h1>
@@ -418,7 +432,7 @@ div.tocify {
 <p>More to come soon!</p>
 </div>
 
-<p>Sean.Pierre-Louis@unh.edu    Stay tuned for website updates!</p>
+<p>Sean.Pierre-Louis@unh.edu</p>
 
 
 </div>
