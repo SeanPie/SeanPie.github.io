@@ -1,0 +1,181 @@
+---
+title: "Seurat Analysis on Dummy Data"
+author: "Sean Pierre"
+date: '2022-06-17'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+  
+---
+
+**Spatial Transcriptomics Seurat analysis based on: https://satijalab.org/seurat/articles/pbmc3k_tutorial.html**
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(Seurat)
+library(patchwork)
+```
+
+# Loading in the data 
+Creating a Seurat Object:
+
+``` {r}
+dummy2.data <- Read10X(data.dir = "~/Desktop/test/week/outs/filtered_feature_bc_matrix")
+
+dummy2 <- CreateSeuratObject(counts = dummy2.data, project = "6WeekKidney", min.cells = 3, min.features = 200)
+dummy2
+```
+## Merging Two Data Objects
+Can be used to easily compare male and female, dehydrated vs hydrated, etc...
+
+``` {r, unused-example}
+dummy.data <- Read10X(data.dir= "~/Desktop/test/sham/outs/filtered_feature_bc_matrix")
+dummy <- CreateSeuratObject(counts = dummy.data, project = "ShamKidney", min.cells = 3, min.features = 200)
+dummy
+
+dummy.combined <- merge(dummy, y = dummy2, add.cell.ids = c("6week", "sham"), project = "Comparison")
+dummy.combined
+ 
+```
+
+
+# Pre-Processing and Normalization
+
+In online example, filtering was done on cells with >5% mitochondrial counts, however in test data, Kidneys have been damaged which would lead to increased mitochondrial expression; Different metrics needed?
+
+FeatureScatter can be used to visualize feature-feature relationships, as well as, metadata comparison. This can be useful for data filtering. Filtering cells with over 6000/under 500 features or >50% mitochondrial DNA?
+
+```{r}
+dummy[["percent.mt"]] <- PercentageFeatureSet(dummy, pattern = "^mt-") #Calculates the percentage of couns originating from a set of features
+
+head(dummy@meta.data, 5) #Meta data for first 5 cells
+
+VlnPlot(dummy, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
+plot1 <- FeatureScatter(dummy, feature1 ="nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(dummy, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+plot1 + plot2
+```
+
+Filtering cells with over 6000/under 500 features or >50% mitochondrial DNA?
+Normalizing data by default: normalization.method = "LogNormalize", scale.factor = 10000
+
+``` {r, warning = FALSE}
+dummy <- subset(dummy, subset = nFeature_RNA > 500 & nFeature_RNA < 6000 & percent.mt < 25)
+dummy <- NormalizeData(dummy)
+
+dummy <- FindVariableFeatures(dummy, selection.method = "vst", nfeatures = 2000)
+top10 <-  head(VariableFeatures(dummy), 10)
+
+plot1 <- VariableFeaturePlot(dummy)
+plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot1
+plot2
+```
+
+# Feature Selection and Scaling
+
+Linear transformation or scaling, standard for dimensionality reduction so that highly expressed genes don't dominate downstream analysis.
+
+Run PCA on the scaled data based on previously determined variable features. What are the possible variable features?
+
+in DimHeatMap(), cells and features are ordered according to PCA scores. 
+
+```{r, warning = FALSE}
+all.genes <- rownames(dummy)
+#length(all.genes)
+
+dummy <- ScaleData(dummy, features = all.genes)
+
+dummy <- RunPCA(dummy, features = VariableFeatures(object = dummy))
+print(dummy[["pca"]], dims = 1:5,nfeatures = 5)
+VizDimLoadings(dummy, dims = 1:2, reduction = "pca")
+
+DimPlot(dummy, reduction = "pca")
+DimHeatmap(dummy, dims = 1, cells = 500, balanced = TRUE)
+DimHeatmap(dummy, dims = 1:15, cells = 500, balanced = TRUE)
+
+```
+
+# Clustering
+
+To Determine how many PCs to include and which are significant, perform a resampling test (JackStraw Procedure). Process can take a long time, More approximate technique ElbowPlot() used to save time.
+
+Significant PCs are those with low p-value features. Drop off can be seen after PC 8. Elbow in plot ranks where majority of true signal is captured based on location of elbow bend. Recommended to err on the higher side when choosing the parameter. Too little PCs significantly/adversely alters data.
+
+```{r, dimensionality, warning = FALSE}
+dummy <- JackStraw(dummy, num.replicate = 100)
+dummy <-  ScoreJackStraw(dummy, dims = 1:15)
+
+JackStrawPlot(dummy, dims = 1:15)
+ElbowPlot(dummy)
+```
+Clustering based on K-nearest neighbor and optimization using Louvain algorithm. Increasing resolution increases the number of clusters, where more resolution is needed with larger datasets.
+
+``` {r, clustering}
+dummy <- FindNeighbors(dummy, dims = 1:8)
+dummy <-  FindClusters(dummy, resolution = 0.6)
+
+# Look at cluster IDs of the first 5 cells
+head(Idents(dummy), 5)
+```
+
+``` {r, non-linear-redux, message = FALSE, warning = FALSE}
+dummy <- RunUMAP(dummy, dims = 1:8)
+
+DimPlot(dummy, reduction = "umap", label = TRUE)
+```
+
+## Differential Expression
+
+Positive and negative markers for a single cluster can be selected. Choose cluster with ident.1 argument.
+
+``` {r, deq}
+# find all markers of cluster 2
+cluster2.markers <- FindMarkers(dummy, ident.1 = 2, min.pct = 0.25)
+head(cluster2.markers, n = 5)
+
+#For cluster 0
+cluster0.markers <- FindMarkers(dummy, ident.1 = 0, logfc.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+
+# find all markers distinguishing cluster 3 from clusters 0 and 2
+cluster3.markers <- FindMarkers(dummy, ident.1 = 3, ident.2 = c(0, 2), min.pct = 0.25)
+head(cluster3.markers, n = 5)
+
+
+# find markers for every cluster compared to all remaining cells, report only the positive
+# ones
+dummy.markers <- FindAllMarkers(dummy, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+dummy.markers %>%
+    group_by(cluster) %>%
+    slice_max(n = 2, order_by = avg_log2FC)
+
+```
+Voilin plots to try and identify marker genes upregulated in different clusters. I.e. KCNE1 is potassium voltage-gated protein expressed in principal cells, NPHS1 is nephrin protein necessary for proper renal filtration barrier (Both based on Dixon et al.) Cluster 6 associated with principal cells/glomeruli(?).
+
+``` {r, deq-plots}
+
+VlnPlot(dummy, features = c("Aqp2", "Keg1"))
+
+# # you can plot raw counts as well
+VlnPlot(dummy, features = c("Kcne1", "Nphs1"), slot = "counts", log = TRUE)
+
+FeaturePlot(dummy, features = c("Aqp2", "Avpr2", "Kcne1", "Nphs1", "Lrp2", "Keg1"))
+```
+
+# Assinging cell types to clusters
+
+Will be done once accurate canonical markers are found. Example code:
+
+``` {r}
+
+# new.cluster.ids <- c("Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono",
+#     "NK", "DC", "Platelet")
+# names(new.cluster.ids) <- levels(pbmc)
+# pbmc <- RenameIdents(pbmc, new.cluster.ids)
+# DimPlot(pbmc, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+
+```

@@ -1,5 +1,8 @@
 name: "SeanPie.github.io"
 output_dir: docs
+include:
+  - SeuratAnalysis.rmd
+  - SpatialVis.Rmd
 navbar:
   title: "Sean Pierre-Louis"
   type: inverse
