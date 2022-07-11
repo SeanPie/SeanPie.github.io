@@ -6,7 +6,7 @@ output:
   html_document
 ---
 
-<br><br><br><br>
+<br><br><br>
 
 # About Me
 
@@ -26,9 +26,10 @@ I am currently under the supervision of Dr. Matt MacManes.
 
 :::: {style="display: flex;"}
 ::: {}
-I would like to make a beautiful webpage, so I'm spending more time on the little things than I should.
+Current Research work:
+  [Spatial Transcriptomics analysis](SeuratAnalysis.html)
 
-<br><br><br><br>
+<br><br><br>
 
 :::
 
