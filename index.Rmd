@@ -1,58 +1,56 @@
 ---
-title: "Sean Pierre-Louis"
-subtitle: "Master of Science: Genetics"
-author: "University of New Hampshire Graduate Student"
 output: 
   html_document
 ---
 
-<br><br><br>
-
-# About Me
+# Welcome!
 
 ***
 
-### Welcome!
-
-::: {.floating}
-I am a first year Masters student trying to learn the ways of the computer.
-I've continued my studies here at the University of New Hampshire where I also completed my BSc. 
-I am currently under the supervision of Dr. Matt MacManes.
-
-
-![Hi, Its Me!](Linkedin1.jpg){.class width=35%}
-
-:::
-
-Current Research work:
-
-[Spatial Transcriptomics Notes](./docs/SpatialVis.html)
-
-[Seurat Transcriptomics Analysis Notes](./docs/SeuratAnalysis.html)
+### Bio
 
 :::: {style="display: flex;"}
 ::: {}
-Text Place Holder
-
-<br><br><br>
+![The start of my graduate journey](Linkedin1.jpg){.class width=60%}
 
 :::
 
 ::: {}
-I'm hoping this will be formatted in a separate column. Not for any particular reason but I can imagine its usefulness in the future
+
+I am a bioinformatics focused Masters student trying to learn the ways of the computer.
+
+I've continued my studies here at the University of New Hampshire where I also completed my BSc. 
+
+I am currently working under Dr. Matt MacManes to understand the dehydration resistance in Peromyscus eremicus.
+
+
+Bioinformatics Notes:
+
+[Spatial Transcriptomics Notes](SpatialVis.html)
+
+[Seurat Transcriptomics Analysis Notes](SeuratAnalysis.html)
 :::
 ::::
 
+<br>
 
-# Research
-
-***
-
-I've yet to have any publications and my CV looks more like a resume but my research work is to be based on the desert cactus mouse, Peromyscus eremicus. This North American mouse has an amazing ability to resist severe dehydration and we're trying to understand how. My first research project will be analyzing the microbiota of peromyscus through RNA sequencing. 
-
-
-# CV
+### Research
 
 ***
 
-More to come soon!
+:::: {style="display: flex;"}
+::: {}
+
+![The desert cactus mouse, Peromyscus eremicus!](PE1.jpg){.class width="2000px"}
+
+:::
+:::{}
+<br><br>
+This North American mouse has an amazing ability to resist severe dehydration and remains active and functional in the absence of water. When compared to the human body, which experiences organ failure following 3 days without water, this intriguing capablity is highlighted. 
+
+To explore this ability, the members of the MacManus lab are performing spatial transcriptomics analysis of relevant genes. This type of sequencing will tell us what differentially expressed genes this mouse relies on but also where in the tissue expression occurs.
+
+In particular my analysis will be focused on the involvment of the liver on this mices' dehydration capabilites.
+
+:::
+::::

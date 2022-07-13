@@ -7,14 +7,14 @@ navbar:
   title: "Sean Pierre-Louis"
   type: inverse
   left:
-    - text: "About Me"
-      icon: fa-bomb
+    - text: "Home"
+      icon: fa-home
       href: index.html
-    - text: "Blog"
-      icon: fa-light fa-laptop-file
+    - text: "Research"
+      icon: fa-laptop
       href: Blog.html
     - icon: fa-question
-      text: "Contact"
+      text: "CV"
       href: Contact.html
   right:
     - icon: fa-envelope-o fa
@@ -29,7 +29,5 @@ navbar:
 output:
   html_document:
     theme: readable
-    toc: true
-    toc_float: true
-    include:
-      after_body: footer.html
+    toc: false
+    toc_float: false
