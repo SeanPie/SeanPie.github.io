@@ -26,9 +26,9 @@ I am currently under the supervision of Dr. Matt MacManes.
 
 Current Research work:
 
-[Spatial Transcriptomics Notes](SpatialVis.html)
+[Spatial Transcriptomics Notes](./docs/SpatialVis.html)
 
-[Seurat Transcriptomics Analysis Notes](SeuratAnalysis.html)
+[Seurat Transcriptomics Analysis Notes](./docs/SeuratAnalysis.html)
 
 :::: {style="display: flex;"}
 ::: {}
