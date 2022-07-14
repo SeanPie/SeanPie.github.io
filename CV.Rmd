@@ -1,8 +1,8 @@
 ---
-title: "CV"
-author: "Sean Pierre"
 output:
-  html_document:
-    toc: false
+  html_document
 ---
-Maybe importing PDF.... As soon I make one...
+### Education
+### Research
+### Workshops
+### Teaching
