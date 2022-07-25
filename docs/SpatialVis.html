@@ -389,8 +389,7 @@ div.tocify {
 <p><strong>Spatial Transcriptomics analysis based on <a
 href="https://lmweber.org/OSTA-book/analysis-steps.html"
 class="uri">https://lmweber.org/OSTA-book/analysis-steps.html</a></strong></p>
-<p>For both practice data from github and from mice kidney paper.
-(recommit)</p>
+<p>For both practice data from github and from mice kidney paper.</p>
 <div id="load-the-data" class="section level1">
 <h1>Load the data</h1>
 <p>Create a Spatial Experiment object.</p>
@@ -429,7 +428,7 @@ plotVisium(shamKidney)</code></pre>
 </div>
 <div id="filtering-and-normalization" class="section level1">
 <h1>Filtering and Normalization</h1>
-<pre class="r"><code># add some values in &#39;colData&#39; to annotate spots, also done by addPerCellQC function
+<pre class="r"><code># add some values in &#39;colData&#39; to annotate spots, also done by addPerCellQC function, 
 # colData(shamKidney)$sum &lt;- colSums(counts(shamKidney))
 
 #All spots already in tissue because using filtered data
@@ -448,7 +447,7 @@ table(is_mito)</code></pre>
 <pre class="r"><code>rowData(shamKidney)$symbol[is_mito]</code></pre>
 <pre><code>##  [1] &quot;mt-Nd1&quot;  &quot;mt-Nd2&quot;  &quot;mt-Co1&quot;  &quot;mt-Co2&quot;  &quot;mt-Atp8&quot; &quot;mt-Atp6&quot; &quot;mt-Co3&quot; 
 ##  [8] &quot;mt-Nd3&quot;  &quot;mt-Nd4l&quot; &quot;mt-Nd4&quot;  &quot;mt-Nd5&quot;  &quot;mt-Nd6&quot;  &quot;mt-Cytb&quot;</code></pre>
-<pre class="r"><code>shamKidney &lt;- addPerCellQC(shamKidney, subsets = list(mito = is_mito))
+<pre class="r"><code>shamKidney &lt;- addPerCellQC(shamKidney, subsets = list(mito=is_mito))
 head(colData(shamKidney))</code></pre>
 <pre><code>## DataFrame with 6 rows and 10 columns
 ##                    in_tissue array_row array_col   sample_id       sum
@@ -478,7 +477,7 @@ head(colData(shamKidney))</code></pre>
 <pre class="r"><code>plotVisium(shamKidney, fill = &quot;sum&quot;, trans = &quot;log&quot;, highlight = &quot;in_tissue&quot;)</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Thresholds can be used as QC to remove spots that don’t meet metrics.
-Includes among others:</p>
+Including but not limited to:</p>
 <ol style="list-style-type: decimal">
 <li><p>Library size</p></li>
 <li><p>Expressed genes</p></li>
@@ -486,6 +485,10 @@ Includes among others:</p>
 example)</p></li>
 <li><p>Cells per spot (If available for dataset)</p></li>
 </ol>
+<p>Appears to be a spike at low library sizes? An increased number of
+spots with low number of transcripts around 1000 which can be filtered
+out. Need to doublecheck the difference between UMIs and expressed
+genes.</p>
 <pre class="r"><code>hist(colData(shamKidney)$sum, breaks = 20) # Library Size, total sum of UMI counts per spot (included in sum column)</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre class="r"><code>hist(colData(shamKidney)$detected, breaks = 20) # Number of expressed genes per spot (detected column)</code></pre>
@@ -493,25 +496,26 @@ example)</p></li>
 <pre class="r"><code>hist(colData(shamKidney)$subsets_mito_percent, breaks = 20) # Proportion of mitochondrial genes per spot</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
 <pre class="r"><code># select QC threshold for library size
-qc_lib_size &lt;- colData(shamKidney)$sum &lt; 5000
+qc_lib_size &lt;- colData(shamKidney)$sum &lt; 1500
 table(qc_lib_size)</code></pre>
 <pre><code>## qc_lib_size
 ## FALSE  TRUE 
-##  1217   683</code></pre>
+##  1731   169</code></pre>
 <pre class="r"><code>colData(shamKidney)$qc_lib_size &lt;- qc_lib_size
 
 # check spatial pattern of discarded spots
 plotQC(shamKidney, type = &quot;spots&quot;, 
        discard = &quot;qc_lib_size&quot;)</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-5-4.png" width="672" /></p>
-<pre class="r"><code># # combined set of discarded spots
-# discard &lt;- qc_lib_size | qc_detected | qc_mito | qc_cell_count
-# colData(spe)$discard &lt;- discard
+<p>Remove and filter any low quality spots. Only based on UMIs</p>
+<pre class="r"><code># combined set of discarded spots
+discard &lt;- qc_lib_size
+colData(shamKidney)$discard &lt;- discard
 
-# # filter low-quality spots
-# spe &lt;- spe[, !colData(spe)$discard]</code></pre>
+# filter low-quality spots
+shamKidney &lt;- shamKidney[, !colData(shamKidney)$discard]</code></pre>
 <p>Log based normalization can be performed to scale data approximately
-and create clusters. Is this necessary for filtered data?</p>
+and create clusters.</p>
 </div>
 <div id="clustering-and-visualization" class="section level1">
 <h1>Clustering and Visualization</h1>
@@ -522,9 +526,9 @@ qclus &lt;- quickCluster(shamKidney)
 shamKidney &lt;- computeSumFactors(shamKidney, cluster = qclus)
 summary(sizeFactors(shamKidney))</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.04858 0.49883 0.88176 1.00000 1.44200 3.10954</code></pre>
+##  0.1591  0.5492  0.9118  1.0000  1.3973  2.7630</code></pre>
 <pre class="r"><code>hist(sizeFactors(shamKidney), breaks = 20)</code></pre>
-<p><img src="SpatialVis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="SpatialVis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>shamKidney &lt;-  logNormCounts(shamKidney)
 assayNames(shamKidney)</code></pre>
 <pre><code>## [1] &quot;counts&quot;    &quot;logcounts&quot;</code></pre>
@@ -538,17 +542,36 @@ selection based on SPARK-X package, HVG based on scran package</p>
 deCells &lt;-  modelGeneVar(shamKidney)
 
 fit &lt;-  metadata(deCells)
+
 plot(fit$mean, fit$var, 
      xlab = &quot;mean of log-expression&quot;, ylab = &quot;variance of log-expression&quot;)
 curve(fit$trend(x), col = &quot;dodgerblue&quot;, add = TRUE, lwd = 2)</code></pre>
-<p><img src="SpatialVis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="SpatialVis_files/figure-html/getHVGs-1.png" width="672" /></p>
 <pre class="r"><code>top_hvgs &lt;- getTopHVGs(deCells, prop = 0.1) #prop defines how many HVGS are wanted, 0.1 returns top 10% of genes
 length(top_hvgs)</code></pre>
-<pre><code>## [1] 623</code></pre>
-<p>PCA and UMAP can be easily produced. How do PCA/UMAP plots compare to
-the plots prpduced by loupe browser for 6week sample? They are different
-but I think different because they have 8 clusters, Compared to my
-6.</p>
+<pre><code>## [1] 446</code></pre>
+<p>plot shows the total UMIs expressed in spots with differentially
+expressed cells. This is the absolute numver of observed transcripts per
+spot in spots expressing genes in the HVG list. (Based on 10x definition
+of UMI, needs to be doublechecked)</p>
+<p>Integration of highly variable genes and spatially variable genes can
+be combines to further identify biologically relevant information not
+cpatured by HVGs alone. Example in Li et al. 2021 combines principal
+components of based on HVGs and SVGs in downstreams analysis.</p>
+<pre class="r"><code>#Delete columns added in first addPerCellQC function to prevent duplicate columns
+shamKidney$sum &lt;- shamKidney$detected &lt;- shamKidney$total &lt;-  NULL
+
+#careful running multiple times, adds duplicate columns and breaks code.
+shamKidney &lt;- addPerCellQC(shamKidney, subsets = list(hvg = top_hvgs))
+# head(colData(shamKidney))
+
+plotSpots(shamKidney, annotate = &quot;subsets_hvg_sum&quot;, palette = c(&quot;whitesmoke&quot;, &quot;red4&quot;))</code></pre>
+<p><img src="SpatialVis_files/figure-html/visualizeHVGs-1.png" width="672" /></p>
+<p>PCA and UMAP can be easily produced.</p>
+<p>How do PCA/UMAP plots compare to the plots prpduced by loupe browser
+for 6week sample? They are different maybe because the number of
+clusters differ. Should they all be the same? How do they differ
+compared to seurat clustering?</p>
 <pre class="r"><code>set.seed(123)
 shamKidney &lt;- runPCA(shamKidney, subset_row = top_hvgs)
 shamKidney &lt;- runUMAP(shamKidney, dimred = &quot;PCA&quot;)
@@ -562,9 +585,9 @@ plotDimRed(shamKidney, type = &quot;PCA&quot;)</code></pre>
 <pre class="r"><code>plotDimRed(shamKidney, type = &quot;UMAP&quot;)</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <p>Produces clusters of HVGs using graph-based clustering based on the
-Walktrap method. Applies to top 50 PCs? (Meaning?)</p>
-<p>Change K values to get number of clusters less than 8. Are less
-clusters better or are more clusters more accurate?</p>
+Walktrap method. Applies to top 50 PCs?</p>
+<p>Change K values to change the number of clusters. Are less clusters
+better or are more clusters better for analysis?</p>
 <pre class="r"><code>set.seed(123)
 k = 20
 g &lt;- buildSNNGraph(shamKidney, k = k, use.dimred = &quot;PCA&quot;) #Graph based clustering
@@ -572,28 +595,29 @@ g_walk &lt;- igraph::cluster_walktrap(g)
 clus &lt;- g_walk$membership
 table(clus)</code></pre>
 <pre><code>## clus
-##   1   2   3   4   5   6   7   8   9  10 
-## 147 366 431 174  49 455 109  87  57  25</code></pre>
+##   1   2   3   4   5   6   7   8 
+## 208 216 727 306 136  45  36  57</code></pre>
 <pre class="r"><code>colLabels(shamKidney) &lt;- factor(clus) #Store cluster labels in column &#39;label&#39; in colData
 
 plotSpots(shamKidney, annotate = &quot;label&quot;,
-          palette = rainbow(10))</code></pre>
+          palette = rainbow(8))</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r"><code>plotVisium(shamKidney, fill = &quot;label&quot;, trans = &quot;log&quot;, highlight = &quot;in_tissue&quot;, palette = rainbow(10))</code></pre>
+<pre class="r"><code>plotVisium(shamKidney, fill = &quot;label&quot;, trans = &quot;log&quot;, highlight = &quot;in_tissue&quot;, palette = rainbow(8))</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <pre class="r"><code>plotDimRed(shamKidney, type = &quot;PCA&quot;,
-           annotate = &quot;label&quot;, palette = rainbow(10))</code></pre>
+           annotate = &quot;label&quot;, palette = rainbow(8))</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
 <pre class="r"><code>plotDimRed(shamKidney, type = &quot;UMAP&quot;,
-           annotate = &quot;label&quot;, palette = rainbow(10))</code></pre>
+           annotate = &quot;label&quot;, palette = rainbow(8))</code></pre>
 <p><img src="SpatialVis_files/figure-html/unnamed-chunk-9-4.png" width="672" /></p>
-<p>Code to identify marker genes, can also be done using Seurat</p>
+<p>Code to identify potential marker genes, can also be done using
+Seurat</p>
 <pre class="r"><code>rownames(shamKidney) &lt;- rowData(shamKidney)$symbol
 
 markers &lt;- findMarkers(shamKidney, test = &#39;binom&#39;, direction = &#39;up&#39;) #Produces list of clusters equal to clusters from graph based
 markers</code></pre>
-<pre><code>## List of length 10
-## names(10): 1 2 3 4 5 6 7 8 9 10</code></pre>
+<pre><code>## List of length 8
+## names(8): 1 2 3 4 5 6 7 8</code></pre>
 <pre class="r"><code>interesting &lt;- markers[[6]] #selection for which cluster
 best_set &lt;- interesting[interesting$Top &lt;= 5, ]
 logFCs &lt;- getMarkerEffects(best_set)
