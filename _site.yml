@@ -12,10 +12,10 @@ navbar:
       href: index.html
     - text: "Research"
       icon: fa-laptop
-      href: Blog.html
-    - icon: fa-question
+      href: research.html
+    - icon: fa-dna
       text: "CV"
-      href: Contact.html
+      href: CV.html
   right:
     - icon: fa-envelope-o fa
       href: mailto:Sean.Pierre-Louis@unh.edu
@@ -29,5 +29,3 @@ navbar:
 output:
   html_document:
     theme: readable
-    toc: false
-    toc_float: false

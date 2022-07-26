@@ -1,8 +1,0 @@
----
-title: "Blog"
-author: "Sean Pierre"
-output: 
-  html_document:
-    toc: false
----
-I'm not sure if I will be making a blog but I suppose its nice to know that I can.
