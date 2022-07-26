@@ -390,6 +390,9 @@ div.tocify {
 href="https://lmweber.org/OSTA-book/analysis-steps.html"
 class="uri">https://lmweber.org/OSTA-book/analysis-steps.html</a></strong></p>
 <p>For both practice data from github and from mice kidney paper.</p>
+<div id="spatial-experiment-object-notes" class="section level1">
+<h1><a href="SpatialVis.html">Spatial Experiment Object Notes</a></h1>
+</div>
 <div id="load-the-data" class="section level1">
 <h1>Load the data</h1>
 <p>Create a Spatial Experiment object.</p>
@@ -618,7 +621,7 @@ markers &lt;- findMarkers(shamKidney, test = &#39;binom&#39;, direction = &#39;u
 markers</code></pre>
 <pre><code>## List of length 8
 ## names(8): 1 2 3 4 5 6 7 8</code></pre>
-<pre class="r"><code>interesting &lt;- markers[[6]] #selection for which cluster
+<pre class="r"><code>interesting &lt;- markers[[4]] #selection for which cluster
 best_set &lt;- interesting[interesting$Top &lt;= 5, ]
 logFCs &lt;- getMarkerEffects(best_set)
 

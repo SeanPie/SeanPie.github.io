@@ -23,6 +23,7 @@ library(dplyr)
 
 ```
 
+# [Spatial Experiment Object Notes](SpatialVis.html)
 
 # Load the data
 
@@ -240,7 +241,7 @@ rownames(shamKidney) <- rowData(shamKidney)$symbol
 markers <- findMarkers(shamKidney, test = 'binom', direction = 'up') #Produces list of clusters equal to clusters from graph based
 markers
 
-interesting <- markers[[6]] #selection for which cluster
+interesting <- markers[[4]] #selection for which cluster
 best_set <- interesting[interesting$Top <= 5, ]
 logFCs <- getMarkerEffects(best_set)
 
